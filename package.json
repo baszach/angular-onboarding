@@ -21,6 +21,7 @@
     "@angular/platform-browser": "^14.1.0-next",
     "@angular/platform-browser-dynamic": "^14.1.0-next",
     "@angular/router": "^14.1.0-next",
+    "@datorama/akita": "^7.1.1",
     "angular-in-memory-web-api": "~0.14.0",
     "rxjs": "~7.5.0",
     "tslib": "^2.3.0",

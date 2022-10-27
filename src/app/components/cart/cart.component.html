@@ -1,0 +1,42 @@
+<h3>Cart</h3>
+
+<p>
+    <a routerLink="/shipping">Shipping Prices</a>
+</p>
+
+<div *ngIf="cart$ | async as cart">
+    <div class="cart-item" *ngFor="let item of cart">
+        <span>{{ item.name }}</span>
+        <span>{{ item.price | currency }}</span>
+        <button (click)="removeFromCart(item.id)">Remove</button>
+    </div>
+</div>
+
+<form [formGroup]="checkoutForm" (ngSubmit)="onSubmit()">
+    <div>
+        <label for="name">Name</label>
+        <input id="name" type="text" formControlName="name">
+    </div>
+
+    <div>
+        <label for="email">Email</label>
+        <input id="email" type="text" formControlName="email">
+    </div>
+
+    <div>
+        <label for="address">Address</label>
+        <input id="address" type="text" formControlName="address">
+    </div>
+
+    <div>
+        <h3>Shipping</h3>
+        <div *ngFor="let shipping of shippingCosts$ | async">
+            <label [for]="shipping.type">{{ shipping.type }}</label>
+            <input [id]="shipping.type" type="radio" [value]="shipping.type" name="shipping" formControlName="shipping">
+        </div>
+    </div>
+
+    <button class="button" type="submit" [disabled]="checkoutForm.invalid">
+        Order Now
+    </button>
+</form>

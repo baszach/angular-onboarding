@@ -4,9 +4,7 @@
 
 export const environment = {
   production: false,
-  api: {
-    shippingURL: '/assets/shipping.json',
-  },
+  appUrl: "http://localhost:4200"
 };
 
 /*
