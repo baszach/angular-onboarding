@@ -9,8 +9,8 @@ export class CartService {
     constructor(private cartStore: CartStore) {
     }
 
-    removeFromCart(productId: number) {
-        this.cartStore.remove(productId);
+    removeFromCart(productGuid: string) {
+        this.cartStore.remove(productGuid);
     }
 
     addToCart(product: Product) {

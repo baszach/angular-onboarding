@@ -37,6 +37,6 @@ export class ProductDetailsComponent implements OnInit {
 
     addToCart(product: Product) {
         this.cartService.addToCart(product);
-        window.alert('Your product has been added to the cart!');
+        console.log('Product ' + product.name + ' has been added to your cart!');
     }
 }

@@ -137,6 +137,18 @@ app-top-bar h1 {
   background-color: #EEEEEE;
 }
 
+.cart-counter {
+  background-color: #1976d2;
+  color: white;
+  font-weight: bold;
+  border-radius: 4px;
+  padding-left: 4px;
+  padding-right: 4px;
+  font-size: 14px;
+
+  margin-right: 12px;
+}
+
 
 /*
 Copyright Google LLC. All Rights Reserved.

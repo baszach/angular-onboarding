@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {FormBuilder, FormControl, FormGroup, Validator, Validators} from "@angular/forms";
+import {FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
 
 import {CartService} from '../../state/cart/cart.service';
 import {Observable, Subscription} from "rxjs";
@@ -47,21 +47,31 @@ export class CartComponent implements OnInit {
         });
     }
 
+    removeFromCart(product: Product) {
+        console.log("Product " + product.name + " (" + product.guid + ") removed from cart!");
+        this.cartService.removeFromCart(product.guid);
+    }
+
     onSubmit(): void {
         if (this.checkoutForm.valid) {
-            const formData: FormData = new FormData();
-            formData.append('products', JSON.stringify(this.checkoutForm.controls['products'].value));
-            formData.append('name', JSON.stringify(this.checkoutForm.controls['name'].value));
-            formData.append('email', JSON.stringify(this.checkoutForm.controls['email'].value));
-            formData.append('address', JSON.stringify(this.checkoutForm.controls['address'].value));
-            formData.append('shipping', JSON.stringify(this.checkoutForm.controls['shipping'].value));
+            const payload = JSON.stringify({
+                products: JSON.stringify(this.checkoutForm.controls['products'].value),
+                name: JSON.stringify(this.checkoutForm.controls['name'].value),
+                email: JSON.stringify(this.checkoutForm.controls['email'].value),
+                address: JSON.stringify(this.checkoutForm.controls['address'].value),
+                shipping: JSON.stringify(this.checkoutForm.controls['shipping'].value),
+            });
+
+            console.log(payload);
 
             this.httpClient
-                .post('http://localhost:8080/api/order/new', formData, {headers: new HttpHeaders().set('Content-Type', 'application/json')})
+                .post('http://localhost:8080/api/order/new', payload, {
+                    headers: new HttpHeaders().set('content-type', 'application/json').set('accept', 'application/json')
+                })
                 .subscribe({
                     next: (response) => console.log(response),
                     error: (error) => console.log(error),
-                })
+                });
 
             console.warn('Your order has been submitted', this.checkoutForm.value);
 
@@ -70,9 +80,5 @@ export class CartComponent implements OnInit {
             this.cartSub.unsubscribe();
             this.cartProducts = [];
         }
-    }
-
-    removeFromCart(productId: number) {
-        this.cartService.removeFromCart(productId);
     }
 }
